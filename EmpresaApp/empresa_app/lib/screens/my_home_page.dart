@@ -1,3 +1,4 @@
+import 'package:empresa_app/api_connection/api_connector.dart';
 import 'package:empresa_app/inter_screens/bridge.dart';
 import 'package:empresa_app/models/eventos.dart';
 import 'package:empresa_app/models/funcionarios.dart';
@@ -52,10 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CriarEvento())),
+                          onPressed: () => {
+                                Connector.test(),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CriarEvento()))
+                              },
                           child: Text("Criar")),
                     ),
                     Padding(
