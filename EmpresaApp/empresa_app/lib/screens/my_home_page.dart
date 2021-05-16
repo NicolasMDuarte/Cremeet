@@ -1,6 +1,15 @@
+import 'package:empresa_app/inter_screens/bridge.dart';
+import 'package:empresa_app/models/eventos.dart';
+import 'package:empresa_app/models/funcionarios.dart';
 import 'package:empresa_app/screens/criar_evento.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'editar_evento.dart';
+
+var _avisoEventos = Colors.white;
+var eventoSelecionado = [];
+var _temSelec = false;
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -52,19 +61,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CriarEvento())),
+                          onPressed: () => {
+                                setState(() {
+                                  editar(context);
+                                })
+                              },
                           child: Text("Editar")),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CriarEvento())),
+                        onPressed: () => {
+                          setState(() {
+                            excluir();
+                          })
+                        },
                         child: Text("Excluir"),
                       ),
                     ),
@@ -73,9 +84,109 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: eventos
+                  .map((e) => CheckboxListTile(
+                        title: Text(
+                            funcionarios[e.idOrg - 1].apelido + " - " + e.tipo),
+                        subtitle:
+                            Text(e.local + " - " + e.hora + " - " + e.data),
+                        secondary: Image(
+                            image:
+                                NetworkImage(funcionarios[e.idOrg - 1].foto)),
+                        autofocus: false,
+                        activeColor: Colors.green,
+                        checkColor: Colors.white,
+                        tileColor: _avisoEventos,
+                        selected: _selecionado(e.id),
+                        value: _selecionado(e.id),
+                        onChanged: (bool value) {
+                          setState(() {
+                            selecionaEvento(e, value);
+                          });
+                        },
+                      ))
+                  .toList(),
+            ),
           )
         ],
       ),
     );
+  }
+}
+
+bool _selecionado(var id) {
+  for (var item in eventoSelecionado) {
+    if (item[0] == id) if (item[1] == true)
+      return true;
+    else
+      return false;
+  }
+
+  return false;
+}
+
+void selecionaEvento(var e, var value) {
+  if (true) {
+    for (int i = 0; i < eventoSelecionado.length; i++)
+      eventoSelecionado[i][1] = false;
+
+    for (int i = 0; i < eventoSelecionado.length; i++) {
+      if (eventoSelecionado[i][0] == e.id) eventoSelecionado[i][1] = value;
+    }
+
+    _avisoEventos = Colors.white;
+  }
+}
+
+void excluir() {
+  _temSelec = false;
+  for (var item in eventoSelecionado) {
+    if (item[1] == true) {
+      _temSelec = true;
+    }
+  }
+  if (_temSelec) {
+    _avisoEventos = Colors.white;
+    for (int i = 0; i < eventoSelecionado.length; i++) {
+      if (eventoSelecionado[i][1] == true) {
+        for (var j = 0; j < eventos.length; j++) {
+          if (eventoSelecionado[i][0] == eventos[j].id) eventos.removeAt(j);
+        }
+        eventoSelecionado[i] = [0, false];
+      }
+    }
+  } else {
+    _avisoEventos = Colors.red;
+  }
+}
+
+void editar(var context) {
+  _temSelec = false;
+  for (var item in eventoSelecionado) {
+    if (item[1] == true) {
+      _temSelec = true;
+    }
+  }
+  if (_temSelec) {
+    _avisoEventos = Colors.white;
+    primeiro:
+    for (int i = 0; i < eventoSelecionado.length; i++) {
+      if (eventoSelecionado[i][1] == true) {
+        for (var j = 0; j < eventos.length; j++) {
+          if (eventoSelecionado[i][0] == eventos[j].id) {
+            Bridge.eventoParaEditar = eventos[j];
+            break primeiro;
+          }
+        }
+        eventoSelecionado[i] = [0, false];
+      }
+    }
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EditarEvento()));
+  } else {
+    _avisoEventos = Colors.red;
   }
 }

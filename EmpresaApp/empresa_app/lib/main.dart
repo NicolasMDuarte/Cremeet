@@ -1,4 +1,3 @@
-import 'package:empresa_app/screens/criar_evento.dart';
 import 'package:flutter/material.dart';
 import 'screens/my_home_page.dart';
 
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: CriarEvento(),
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
