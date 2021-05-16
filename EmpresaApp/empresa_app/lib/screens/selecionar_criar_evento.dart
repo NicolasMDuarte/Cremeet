@@ -15,12 +15,12 @@ var _valueTim = List.filled(times.length, false);
 var avisoFunc = Colors.white;
 
 void finalizar(context) {
-  bool temDep = false;
-  bool temEq = false;
-  bool temTime = false;
+  //bool temDep = false;
+  //bool temEq = false;
+  //bool temTime = false;
   bool temFunc = false;
 
-  for (var item in _valueDep) {
+  /*for (var item in _valueDep) {
     if (item == true) temDep = true;
   }
   for (var item in _valueEq) {
@@ -28,7 +28,7 @@ void finalizar(context) {
   }
   for (var item in _valueTim) {
     if (item == true) temTime = true;
-  }
+  }*/
   for (var item in _valueFunc) {
     if (item == true) temFunc = true;
   }

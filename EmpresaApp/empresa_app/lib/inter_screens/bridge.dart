@@ -11,17 +11,17 @@ class Bridge {
   static var valueEq = [];
   static var valueTim = [];
   static var organizador;
-  static var evento;
+  static String evento;
   static var local;
   static var data;
   static var horario;
   static var eventoParaEditar;
 
   static void addEvento() {
-    Evento evento = _criarEvento();
+    Evento event = _criarEvento();
 
-    eventos.add(evento);
-    eventoSelecionado.add([evento.id, false]);
+    eventos.add(event);
+    eventoSelecionado.add([event.id, false]);
 
     valueDep = null;
     valueFunc = null;
@@ -128,8 +128,8 @@ class Bridge {
         funs.add(fun);
       }
     }
-    return evento = new Evento(id, idOrg, Bridge.evento, Bridge.local,
-        Bridge.data, Bridge.horario, deps, eqs, tms, funs);
+    return new Evento(id, idOrg, Bridge.evento, Bridge.local, Bridge.data,
+        Bridge.horario, deps, eqs, tms, funs);
   }
 
   static void _excluirEvento() {

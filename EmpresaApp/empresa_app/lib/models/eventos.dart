@@ -1,7 +1,7 @@
 class Evento {
   var id;
   var idOrg;
-  var tipo;
+  String tipo;
   var local;
   var data;
   var hora;

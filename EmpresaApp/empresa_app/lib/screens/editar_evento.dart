@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-Evento _eventoEdit = Bridge.eventoParaEditar;
-
 class EditarEvento extends StatefulWidget {
   @override
   _EditarEventoState createState() => _EditarEventoState();
@@ -18,6 +16,8 @@ class EditarEvento extends StatefulWidget {
 class _EditarEventoState extends State<EditarEvento> {
   var horario = "Horário";
   var data = "Data";
+
+  Evento _eventoEdit = Bridge.eventoParaEditar;
 
   var avisoOrg = Colors.black54;
   var avisoEvento = Colors.black54;
@@ -188,9 +188,12 @@ class _EditarEventoState extends State<EditarEvento> {
                           })
                         else
                           {
-                            Bridge.organizador = coletarOrg().nome,
-                            Bridge.evento = _eventoEdit.tipo,
-                            Bridge.local = _eventoEdit.local,
+                            if (Bridge.organizador == null)
+                              Bridge.organizador = coletarOrg().nome,
+                            if (Bridge.evento == null)
+                              Bridge.evento = _eventoEdit.tipo,
+                            if (Bridge.local == null)
+                              Bridge.local = _eventoEdit.local,
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -217,7 +220,7 @@ class _EditarEventoState extends State<EditarEvento> {
 }
 
 Funcionario coletarOrg() {
-  var idOrg = _eventoEdit.idOrg;
+  var idOrg = Bridge.eventoParaEditar.idOrg;
   for (var func in funcionarios) {
     if (func.id == idOrg) return func;
   }

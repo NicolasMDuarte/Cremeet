@@ -7,8 +7,6 @@ import 'package:empresa_app/screens/my_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
-var _eventoEdit = Bridge.eventoParaEditar;
-
 var _valueDep = List.filled(departamentos.length, false);
 var _valueFunc = List.filled(funcionarios.length, false);
 var _valueEq = List.filled(equipes.length, false);
@@ -17,12 +15,12 @@ var _valueTim = List.filled(times.length, false);
 var avisoFunc = Colors.white;
 
 void finalizar(context) {
-  bool temDep = false;
+  /*bool temDep = false;
   bool temEq = false;
-  bool temTime = false;
+  bool temTime = false;*/
   bool temFunc = false;
 
-  for (var item in _valueDep) {
+  /*for (var item in _valueDep) {
     if (item == true) temDep = true;
   }
   for (var item in _valueEq) {
@@ -30,7 +28,7 @@ void finalizar(context) {
   }
   for (var item in _valueTim) {
     if (item == true) temTime = true;
-  }
+  }*/
   for (var item in _valueFunc) {
     if (item == true) temFunc = true;
   }
@@ -201,17 +199,17 @@ class _SelecionarEditarEventoState extends State<SelecionarEditarEvento> {
 }
 
 void selecionados() {
-  for (var item in _eventoEdit.departamentos) {
+  for (var item in Bridge.eventoParaEditar.departamentos) {
     for (var d in departamentos) {
       if (d.nome == item) _valueDep[d.id - 1] = true;
     }
   }
-  for (var item in _eventoEdit.equipes) {
+  for (var item in Bridge.eventoParaEditar.equipes) {
     for (var e in equipes) {
       if (e.nome == item) _valueEq[e.id - 1] = true;
     }
   }
-  for (var item in _eventoEdit.times) {
+  for (var item in Bridge.eventoParaEditar.times) {
     for (var t in times) {
       if (t.nome == item) _valueTim[t.id - 1] = true;
     }
@@ -220,7 +218,7 @@ void selecionados() {
   for (int i = 0; i < funcionarios.length; i++) {
     _valueFunc[i] = false;
   }
-  for (var item in _eventoEdit.idFuncs) {
+  for (var item in Bridge.eventoParaEditar.idFuncs) {
     _valueFunc[item - 1] = true;
   }
 }
