@@ -1,7 +1,9 @@
+import 'package:empresa_app/api_connection/api_connector.dart';
 import 'package:flutter/material.dart';
 import 'screens/my_home_page.dart';
 
 void main() {
+  Connector.test();
   runApp(MyApp());
 }
 
