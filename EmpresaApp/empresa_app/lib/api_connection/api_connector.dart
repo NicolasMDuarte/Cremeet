@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:empresa_app/models/departamentos.dart';
 import 'package:http/http.dart' as http;
 
 class Connector {
@@ -11,8 +14,9 @@ class Connector {
     try {
       print('entrou');
       var json = await fetchAlbum();
+      var result = Departamento.fromJson(jsonDecode(json.body));
       print('saiu');
-      print(json);
+      print(result.id.toString() + " - " + result.nome);
     } catch (Exception) {
       print('erro');
       print(Exception);
