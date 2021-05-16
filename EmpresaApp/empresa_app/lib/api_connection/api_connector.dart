@@ -4,8 +4,7 @@ class Connector {
   static var json;
 
   static Future<http.Response> fetchAlbum() {
-    var url = "192.168.1.161";
-    return http.get(Uri.https(url, 'departamentos'));
+    return http.get(Uri.http('192.168.1.161:3000', 'departamentos'));
   }
 
   static void test() async {
