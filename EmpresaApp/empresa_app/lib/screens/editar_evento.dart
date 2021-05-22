@@ -82,7 +82,7 @@ class _EditarEventoState extends State<EditarEvento> {
               child: Column(
                 children: [
                   Container(
-                    child: Text("Criar Evento",
+                    child: Text("Editar Evento",
                         style: GoogleFonts.lato(
                             fontSize: 40, fontStyle: FontStyle.italic)),
                     margin: EdgeInsets.only(top: 40, bottom: 20),
@@ -101,7 +101,7 @@ class _EditarEventoState extends State<EditarEvento> {
                       },
                       items: funcionarios
                           .map((e) => DropdownMenuItem(
-                                value: e.nome,
+                                value: e.nome.toString(),
                                 child: Text(e.nome),
                               ))
                           .toList()),

@@ -5,16 +5,20 @@ import 'package:empresa_app/models/funcionarios.dart';
 import 'package:empresa_app/models/times.dart';
 import 'package:empresa_app/screens/my_home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:getwidget/getwidget.dart';
 
 var _valueDep = List.filled(departamentos.length, false);
 var _valueFunc = List.filled(funcionarios.length, false);
 var _valueEq = List.filled(equipes.length, false);
 var _valueTim = List.filled(times.length, false);
+var _valueSendEmail = false;
+var _valueSendSMS = false;
 
 var avisoFunc = Colors.white;
 
-void finalizar(context) {
+Future<void> finalizar(context) async {
   bool temFunc = false;
 
   for (var item in _valueFunc) {
@@ -31,6 +35,56 @@ void finalizar(context) {
     Bridge.valueTim = _valueTim;
     Bridge.valueFunc = _valueFunc;
     print(Bridge.stringify());
+
+    List<String> receptores = [];
+    int _i = 0;
+    for (var item in funcionarios) {
+      if (Bridge.valueFunc[_i]) {
+        receptores.add(item.email);
+      }
+      _i++;
+    }
+    List<String> receptoresSMS = [];
+    _i = 0;
+    for (var item in funcionarios) {
+      if (Bridge.valueFunc[_i]) {
+        receptoresSMS.add(item.cel);
+      }
+      _i++;
+    }
+
+    String donoReuniao = Bridge.organizador;
+    String tipoEvento = Bridge.evento;
+    String dataEvento = Bridge.data;
+    String horaEvento = Bridge.horario;
+    String localEvento = Bridge.local;
+
+    if (_valueSendEmail) {
+      try {
+        Email email = Email(
+          body:
+              "Você foi convidado para ${tipoEvento.toString()} em ${localEvento.toString()} às ${horaEvento.toString()} do dia ${dataEvento.toString()} por ${donoReuniao.toString()}. Não deixe de comparecer!",
+          subject: "Cremeet - Nova reunião agendada",
+          recipients: receptores,
+          isHTML: false,
+        );
+        await FlutterEmailSender.send(email);
+      } catch (Exception) {
+        print(Exception);
+      }
+    }
+    if (_valueSendSMS) {
+      try {
+        await sendSMS(
+                message:
+                    "Você foi convidado para ${tipoEvento.toString()} em ${localEvento.toString()} às ${horaEvento.toString()} do dia ${dataEvento.toString()} por ${donoReuniao.toString()}. Não deixe de comparecer!",
+                recipients: receptoresSMS)
+            .timeout(Duration(seconds: 5000));
+      } catch (Exception) {
+        print(Exception);
+      }
+    }
+
     Bridge.addEvento();
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => MyHomePage()));
@@ -213,13 +267,36 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 25),
-                child: ElevatedButton(
-                    onPressed: () => {
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                        title: Text("Alertar participantes"),
+                        subtitle: Text("E-mail"),
+                        value: _valueSendEmail,
+                        onChanged: (bool value) {
                           setState(() {
-                            finalizar(context);
-                          })
-                        },
-                    child: Text("Criar Evento")),
+                            _valueSendEmail = value;
+                          });
+                        }),
+                    SwitchListTile(
+                        title: Text("Alertar participantes"),
+                        subtitle: Text("SMS"),
+                        value: _valueSendSMS,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _valueSendSMS = value;
+                          });
+                        }),
+                    ElevatedButton(
+                        onPressed: () => {
+                              setState(() {
+                                finalizar(context);
+                              })
+                            },
+                        child: Text("Criar Evento")),
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                ),
               )
             ],
           ),

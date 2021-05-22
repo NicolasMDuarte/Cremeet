@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class Connector {
   static var json;
-  static var ip = "192.168.1.159:3000";
+  static var ip = "cremeet-api.herokuapp.com";
 
   static Future<bool> connectGet() async {
     try {
