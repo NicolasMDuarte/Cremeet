@@ -4,8 +4,12 @@ class Departamento {
 
   Departamento(this.id, this.nome);
 
-  factory Departamento.fromJson(List<dynamic> json) {
-    return Departamento(json[0]['id'], json[0]['nome']);
+  static void fromJson(List<dynamic> json) {
+    departamentos.clear();
+    for (var dep in json) {
+      departamentos.add(Departamento(dep['id'], dep['nome']));
+    }
+    print('done dep');
   }
 }
 

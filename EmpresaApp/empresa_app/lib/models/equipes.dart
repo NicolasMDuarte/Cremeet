@@ -3,6 +3,14 @@ class Equipe {
   String nome;
 
   Equipe(this.id, this.nome);
+
+  static void fromJson(List<dynamic> json) {
+    equipes.clear();
+    for (var dep in json) {
+      equipes.add(Equipe(dep['id'], dep['nome']));
+    }
+    print('done equipe');
+  }
 }
 
 var equipes = [

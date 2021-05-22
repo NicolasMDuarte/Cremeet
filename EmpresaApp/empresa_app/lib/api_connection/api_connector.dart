@@ -1,25 +1,64 @@
+import 'dart:collection';
 import 'dart:convert';
-
 import 'package:empresa_app/models/departamentos.dart';
+import 'package:empresa_app/models/equipes.dart';
+import 'package:empresa_app/models/eventos.dart';
+import 'package:empresa_app/models/funcionarios.dart';
+import 'package:empresa_app/models/locais.dart';
+import 'package:empresa_app/models/times.dart';
+import 'package:empresa_app/models/tipos_eventos.dart';
 import 'package:http/http.dart' as http;
 
 class Connector {
   static var json;
+  static var ip = "192.168.1.159:3000";
 
-  static Future<http.Response> fetchAlbum() {
-    return http.get(Uri.http('192.168.1.161:3000', 'departamentos'));
-  }
-
-  static void test() async {
+  static Future<bool> connectGet() async {
     try {
-      print('entrou');
-      var json = await fetchAlbum();
-      var result = Departamento.fromJson(jsonDecode(json.body));
-      print('saiu');
-      print(result.id.toString() + " - " + result.nome);
+      json = await http.get(Uri.http(ip, 'departamentos'));
+      Departamento.fromJson(jsonDecode(json.body));
+      json = await http.get(Uri.http(ip, 'equipes'));
+      Equipe.fromJson(jsonDecode(json.body));
+      json = await http.get(Uri.http(ip, 'eventos'));
+      Evento.fromJson(jsonDecode(json.body));
+      json = await http.get(Uri.http(ip, 'funcionarios'));
+      Funcionario.fromJson(jsonDecode(json.body));
+      json = await http.get(Uri.http(ip, 'locais'));
+      Local.fromJson(jsonDecode(json.body));
+      json = await http.get(Uri.http(ip, 'times'));
+      Time.fromJson(jsonDecode(json.body));
+      json = await http.get(Uri.http(ip, 'tipos'));
+      TiposEventos.fromJson(jsonDecode(json.body));
     } catch (Exception) {
-      print('erro');
       print(Exception);
     }
+    return true;
+  }
+
+  static Future<bool> connectPost(Evento evento) async {
+    try {
+      Map<String, String> headers = new HashMap();
+      headers['Accept'] = 'application/json';
+      headers['Content-type'] = 'application/json';
+
+      http.post(Uri.http(ip, 'eventos'),
+          headers: headers, body: jsonEncode(evento.toJson()));
+    } catch (Exception) {
+      print(Exception);
+    }
+    return true;
+  }
+
+  static Future<bool> connectDelete(var id) async {
+    try {
+      Map<String, String> headers = new HashMap();
+      headers['Accept'] = 'application/json';
+      headers['Content-type'] = 'application/json';
+
+      http.delete(Uri.http(ip, 'eventos/' + id.toString()), headers: headers);
+    } catch (Exception) {
+      print(Exception);
+    }
+    return true;
   }
 }

@@ -3,6 +3,14 @@ class TiposEventos {
   String nome;
 
   TiposEventos(this.id, this.nome);
+
+  static void fromJson(List<dynamic> json) {
+    eventos.clear();
+    for (var dep in json) {
+      eventos.add(TiposEventos(dep['id'], dep['nome']));
+    }
+    print('done tipos');
+  }
 }
 
 var eventos = [

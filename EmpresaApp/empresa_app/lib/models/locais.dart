@@ -3,6 +3,14 @@ class Local {
   String nome;
 
   Local(this.id, this.nome);
+
+  static void fromJson(List<dynamic> json) {
+    locais.clear();
+    for (var dep in json) {
+      locais.add(Local(dep['id'], dep['nome']));
+    }
+    print('done local');
+  }
 }
 
 var locais = [

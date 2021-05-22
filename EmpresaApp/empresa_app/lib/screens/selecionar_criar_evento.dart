@@ -15,20 +15,8 @@ var _valueTim = List.filled(times.length, false);
 var avisoFunc = Colors.white;
 
 void finalizar(context) {
-  //bool temDep = false;
-  //bool temEq = false;
-  //bool temTime = false;
   bool temFunc = false;
 
-  /*for (var item in _valueDep) {
-    if (item == true) temDep = true;
-  }
-  for (var item in _valueEq) {
-    if (item == true) temEq = true;
-  }
-  for (var item in _valueTim) {
-    if (item == true) temTime = true;
-  }*/
   for (var item in _valueFunc) {
     if (item == true) temFunc = true;
   }
@@ -88,7 +76,20 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
                                   _valueDep[e.id - 1] = value;
                                   for (var item in funcionarios) {
                                     if (item.idDepartamento == e.id) {
-                                      _valueFunc[item.id - 1] = false;
+                                      if (_valueDep[e.id - 1] == false)
+                                        _valueFunc[item.id - 1] = false;
+                                      else {
+                                        if (_valueDep[
+                                                    item.idDepartamento - 1] ==
+                                                true &&
+                                            _valueEq[item.idEquipe - 1] ==
+                                                true &&
+                                            _valueTim[item.idTime - 1] ==
+                                                true) {
+                                          _valueFunc[item.id - 1] = value;
+                                          avisoFunc = Colors.white;
+                                        }
+                                      }
                                     }
                                   }
                                 });
@@ -114,6 +115,24 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
                               onChanged: (bool value) {
                                 setState(() {
                                   _valueEq[e.id - 1] = value;
+                                  for (var item in funcionarios) {
+                                    if (item.idEquipe == e.id) {
+                                      if (_valueEq[e.id - 1] == false)
+                                        _valueFunc[item.id - 1] = false;
+                                      else {
+                                        if (_valueDep[
+                                                    item.idDepartamento - 1] ==
+                                                true &&
+                                            _valueEq[item.idEquipe - 1] ==
+                                                true &&
+                                            _valueTim[item.idTime - 1] ==
+                                                true) {
+                                          _valueFunc[item.id - 1] = value;
+                                          avisoFunc = Colors.white;
+                                        }
+                                      }
+                                    }
+                                  }
                                 });
                               },
                             ))
@@ -137,6 +156,21 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
                             onChanged: (bool value) {
                               setState(() {
                                 _valueTim[e.id - 1] = value;
+                                for (var item in funcionarios) {
+                                  if (item.idTime == e.id) {
+                                    if (_valueTim[e.id - 1] == false)
+                                      _valueFunc[item.id - 1] = false;
+                                    else {
+                                      if (_valueDep[item.idDepartamento - 1] ==
+                                              true &&
+                                          _valueEq[item.idEquipe - 1] == true &&
+                                          _valueTim[item.idTime - 1] == true) {
+                                        _valueFunc[item.id - 1] = value;
+                                        avisoFunc = Colors.white;
+                                      }
+                                    }
+                                  }
+                                }
                               });
                             },
                           ))
@@ -151,7 +185,8 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
                     .map(
                       (e) => CheckboxListTile(
                         title: Text("${e.apelido} (${e.nome})"),
-                        subtitle: Text(Bridge.findDepartment(e.idDepartamento)),
+                        subtitle: Text(
+                            "${Bridge.findDepartment(e.idDepartamento)} - ${Bridge.findSection(e.idEquipe)} - ${Bridge.findTeam(e.idTime)}"),
                         secondary: Image(
                           image: NetworkImage(e.foto),
                           width: 35,
@@ -164,7 +199,9 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
                         value: _valueFunc[e.id - 1],
                         onChanged: (bool value) {
                           setState(() {
-                            if (_valueDep[e.idDepartamento - 1] == true) {
+                            if (_valueDep[e.idDepartamento - 1] == true &&
+                                _valueEq[e.idEquipe - 1] == true &&
+                                _valueTim[e.idTime - 1] == true) {
                               _valueFunc[e.id - 1] = value;
                               avisoFunc = Colors.white;
                             }

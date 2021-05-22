@@ -92,7 +92,7 @@ class _CriarEventoState extends State<CriarEvento> {
                       },
                       items: funcionarios
                           .map((e) => DropdownMenuItem(
-                                value: e.nome,
+                                value: e.nome.toString(),
                                 child: Text(e.nome),
                               ))
                           .toList()),

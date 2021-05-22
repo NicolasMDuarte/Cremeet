@@ -1,3 +1,4 @@
+import 'package:empresa_app/api_connection/api_connector.dart';
 import 'package:empresa_app/models/departamentos.dart';
 import 'package:empresa_app/models/equipes.dart';
 import 'package:empresa_app/models/eventos.dart';
@@ -32,6 +33,8 @@ class Bridge {
     local = null;
     data = null;
     horario = null;
+
+    Connector.connectPost(event);
   }
 
   static void putEvento() {
@@ -40,6 +43,7 @@ class Bridge {
     _excluirEvento();
     eventos.add(evento);
     eventoSelecionado.add([evento.id, false]);
+    Connector.connectPost(evento);
 
     valueDep = null;
     valueFunc = null;
@@ -58,6 +62,20 @@ class Bridge {
 
   static String findDepartment(int id) {
     for (var item in departamentos) {
+      if (item.id == id) return item.nome;
+    }
+    return "Nenhum";
+  }
+
+  static String findTeam(int id) {
+    for (var item in times) {
+      if (item.id == id) return item.nome;
+    }
+    return "Nenhum";
+  }
+
+  static String findSection(int id) {
+    for (var item in equipes) {
       if (item.id == id) return item.nome;
     }
     return "Nenhum";
@@ -136,7 +154,10 @@ class Bridge {
     for (int i = 0; i < eventoSelecionado.length; i++) {
       if (eventoSelecionado[i][1] == true) {
         for (var j = 0; j < eventos.length; j++) {
-          if (eventoSelecionado[i][0] == eventos[j].id) eventos.removeAt(j);
+          if (eventoSelecionado[i][0] == eventos[j].id) {
+            Connector.connectDelete(eventos[j].id);
+            eventos.removeAt(j);
+          }
         }
         eventoSelecionado[i] = [0, false];
       }

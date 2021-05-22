@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/my_home_page.dart';
 
-void main() {
+Future<void> main() async {
   runApp(MyApp());
 }
 

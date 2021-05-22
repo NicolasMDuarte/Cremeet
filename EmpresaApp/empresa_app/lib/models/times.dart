@@ -3,6 +3,14 @@ class Time {
   String nome;
 
   Time(this.id, this.nome);
+
+  static void fromJson(List<dynamic> json) {
+    times.clear();
+    for (var dep in json) {
+      times.add(Time(dep['id'], dep['nome']));
+    }
+    print('done times');
+  }
 }
 
 var times = [
