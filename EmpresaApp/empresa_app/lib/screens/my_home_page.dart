@@ -87,101 +87,104 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     } else {
       return Scaffold(
-        body: Column(
-          children: [
-            Container(
-              child: Column(
-                children: [
-                  Image(
-                    image: AssetImage('assets/logo.png'),
-                    height: 200,
-                  ),
-                  Container(
-                    child: Text("Cremeet",
-                        style: GoogleFonts.lato(
-                            fontSize: 40, fontStyle: FontStyle.italic)),
-                    margin: EdgeInsets.only(top: 0, bottom: 60),
-                  )
-                ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    Image(
+                      image: AssetImage('assets/logo.png'),
+                      height: 200,
+                    ),
+                    Container(
+                      child: Text("Cremeet",
+                          style: GoogleFonts.lato(
+                              fontSize: 40, fontStyle: FontStyle.italic)),
+                      margin: EdgeInsets.only(top: 0, bottom: 20),
+                    )
+                  ],
+                ),
+                alignment: Alignment.topCenter,
+                margin: EdgeInsets.only(top: 40),
               ),
-              alignment: Alignment.topCenter,
-              margin: EdgeInsets.only(top: 40),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  Text(
-                    'Eventos',
-                    style: GoogleFonts.lato(),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                            onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CriarEvento()))
-                                },
-                            child: Text("Criar")),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                            onPressed: () => {
-                                  setState(() {
-                                    editar(context);
-                                  })
-                                },
-                            child: Text("Editar")),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () => {
-                            setState(() {
-                              excluir(context);
-                            })
-                          },
-                          child: Text("Excluir"),
+              Container(
+                child: Column(
+                  children: [
+                    Text(
+                      'Eventos',
+                      style: GoogleFonts.lato(),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                              onPressed: () => {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CriarEvento()))
+                                  },
+                              child: Text("Criar")),
                         ),
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                              onPressed: () => {
+                                    setState(() {
+                                      editar(context);
+                                    })
+                                  },
+                              child: Text("Editar")),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () => {
+                              setState(() {
+                                excluir(context);
+                              })
+                            },
+                            child: Text("Excluir"),
+                          ),
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SingleChildScrollView(
-              child: Column(
-                children: eventos
-                    .map((e) => CheckboxListTile(
-                          title: Text(funcionarios[e.idOrg - 1].apelido +
-                              " - " +
-                              e.tipo),
-                          subtitle:
-                              Text(e.local + " - " + e.hora + " - " + e.data),
-                          secondary: Image(
-                              image:
-                                  NetworkImage(funcionarios[e.idOrg - 1].foto)),
-                          autofocus: false,
-                          activeColor: Colors.green,
-                          checkColor: Colors.white,
-                          tileColor: _avisoEventos,
-                          selected: _selecionado(e.id),
-                          value: _selecionado(e.id),
-                          onChanged: (bool value) {
-                            setState(() {
-                              selecionaEvento(e, value);
-                            });
-                          },
-                        ))
-                    .toList(),
-              ),
-            )
-          ],
+              SingleChildScrollView(
+                child: Column(
+                  children: eventos
+                      .map((e) => CheckboxListTile(
+                            title: Text(funcionarios[e.idOrg - 1].apelido +
+                                " - " +
+                                e.tipo),
+                            subtitle:
+                                Text(e.local + " - " + e.hora + " - " + e.data),
+                            secondary: Image(
+                                image: NetworkImage(
+                                    funcionarios[e.idOrg - 1].foto)),
+                            autofocus: false,
+                            activeColor: Colors.green,
+                            checkColor: Colors.white,
+                            tileColor: _avisoEventos,
+                            selected: _selecionado(e.id),
+                            value: _selecionado(e.id),
+                            onChanged: (bool value) {
+                              setState(() {
+                                selecionaEvento(e, value);
+                              });
+                            },
+                          ))
+                      .toList(),
+                ),
+              )
+            ],
+          ),
         ),
       );
     }

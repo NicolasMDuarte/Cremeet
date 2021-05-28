@@ -20,6 +20,37 @@ var avisoFunc = Colors.white;
 
 Future<void> finalizar(context) async {
   bool temFunc = false;
+  int posOrg = -1;
+  int posOrgEq = -1;
+  int posOrgTim = -1;
+  int posOrgDep = -1;
+
+  for (int i = 0; i < funcionarios.length; i++) {
+    if (funcionarios[i].nome == Bridge.organizador) posOrg = i;
+  }
+
+  for (int i = 0; i < times.length; i++) {
+    if (times[i].id == funcionarios[posOrg].idTime) posOrgTim = i;
+  }
+
+  for (int i = 0; i < equipes.length; i++) {
+    if (equipes[i].id == funcionarios[posOrg].idEquipe) posOrgEq = i;
+  }
+
+  for (int i = 0; i < departamentos.length; i++) {
+    if (departamentos[i].id == funcionarios[posOrg].idDepartamento)
+      posOrgDep = i;
+  }
+
+  if (_valueFunc[posOrg] == false) {
+    _valueFunc[posOrg] = true;
+    _valueDep[posOrgDep] = true;
+    _valueEq[posOrgEq] = true;
+    _valueTim[posOrgTim] = true;
+
+    posOrg = -1;
+    return;
+  }
 
   for (var item in _valueFunc) {
     if (item == true) temFunc = true;
