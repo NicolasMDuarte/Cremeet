@@ -76,7 +76,7 @@ class _CriarEventoState extends State<CriarEvento> {
                   },
                   child: Icon(Icons.arrow_back_rounded)),
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.all(15),
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 24),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

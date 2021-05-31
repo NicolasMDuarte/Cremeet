@@ -143,7 +143,7 @@ class _SelecionarCriarState extends State<SelecionarCriar> {
                     },
                     child: Icon(Icons.arrow_back_rounded)),
                 alignment: Alignment.topLeft,
-                margin: EdgeInsets.only(left: 5, top: 15, bottom: 15),
+                margin: EdgeInsets.only(left: 5, top: 24, bottom: 15),
               ),
               Container(
                 child: Text("Filtros"),
