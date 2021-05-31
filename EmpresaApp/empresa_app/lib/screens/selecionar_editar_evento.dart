@@ -133,10 +133,18 @@ class _SelecionarEditarEventoState extends State<SelecionarEditarEvento> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.only(top: 30),
+          padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
           child: Column(
             children: [
+              Container(
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.arrow_back_rounded)),
+                alignment: Alignment.topLeft,
+                margin: EdgeInsets.only(left: 5, top: 15, bottom: 15),
+              ),
               Container(
                 child: ElevatedButton(
                     onPressed: () => setState(() => selecionados()),
@@ -302,8 +310,10 @@ class _SelecionarEditarEventoState extends State<SelecionarEditarEvento> {
                     )
                     .toList(),
               ),
+              Divider(
+                thickness: 2,
+              ),
               Container(
-                padding: EdgeInsets.only(top: 25),
                 child: Column(
                   children: [
                     SwitchListTile(
@@ -324,13 +334,16 @@ class _SelecionarEditarEventoState extends State<SelecionarEditarEvento> {
                             _valueSendSMS = value;
                           });
                         }),
-                    ElevatedButton(
-                        onPressed: () => {
-                              setState(() {
-                                finalizar(context);
-                              })
-                            },
-                        child: Text("Atualizar Evento")),
+                    Container(
+                      child: ElevatedButton(
+                          onPressed: () => {
+                                setState(() {
+                                  finalizar(context);
+                                })
+                              },
+                          child: Text("Atualizar Evento")),
+                      margin: EdgeInsets.only(top: 5),
+                    ),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,
                 ),

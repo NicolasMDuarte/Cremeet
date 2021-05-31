@@ -77,6 +77,15 @@ class _EditarEventoState extends State<EditarEvento> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back_rounded)),
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.all(15),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -85,7 +94,7 @@ class _EditarEventoState extends State<EditarEvento> {
                     child: Text("Editar Evento",
                         style: GoogleFonts.lato(
                             fontSize: 40, fontStyle: FontStyle.italic)),
-                    margin: EdgeInsets.only(top: 40, bottom: 20),
+                    margin: EdgeInsets.only(bottom: 20),
                     alignment: Alignment.center,
                   ),
                   DropdownButtonFormField<String>(

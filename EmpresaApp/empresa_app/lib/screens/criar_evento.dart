@@ -69,6 +69,15 @@ class _CriarEventoState extends State<CriarEvento> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back_rounded)),
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.all(15),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -77,11 +86,12 @@ class _CriarEventoState extends State<CriarEvento> {
                     child: Text("Criar Evento",
                         style: GoogleFonts.lato(
                             fontSize: 40, fontStyle: FontStyle.italic)),
-                    margin: EdgeInsets.only(top: 40, bottom: 20),
+                    margin: EdgeInsets.only(bottom: 20),
                     alignment: Alignment.center,
                   ),
                   DropdownButtonFormField<String>(
                       decoration: InputDecoration(
+                          icon: Icon(Icons.person),
                           labelText: "Selecione o organizador do evento",
                           labelStyle: TextStyle(color: avisoOrg)),
                       onChanged: (String dono) {
@@ -98,6 +108,7 @@ class _CriarEventoState extends State<CriarEvento> {
                           .toList()),
                   DropdownButtonFormField<String>(
                       decoration: InputDecoration(
+                          icon: Icon(Icons.event_available),
                           labelText: "Selecione o tipo de evento",
                           labelStyle: TextStyle(color: avisoEvento)),
                       onChanged: (String tipo) {
@@ -114,6 +125,7 @@ class _CriarEventoState extends State<CriarEvento> {
                           .toList()),
                   DropdownButtonFormField<String>(
                       decoration: InputDecoration(
+                          icon: Icon(Icons.place),
                           labelText: "Selecione o local da reunião",
                           labelStyle: TextStyle(color: avisoReuniao)),
                       onChanged: (String local) {

@@ -156,6 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
+              Divider(
+                thickness: 2,
+              ),
               SingleChildScrollView(
                 child: Column(
                   children: eventos
